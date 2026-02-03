@@ -16,6 +16,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredItems, setFilteredItems] = useState(items);
 
+  // --- THEME STATE ---
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem('theme') === 'dark';
   });
@@ -40,19 +41,27 @@ function App() {
 
   return (
     <Router>
-      <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-zinc-950 transition-colors duration-500 text-gray-900 dark:text-zinc-100">
+      {/* Global Wrapper for Dark Mode Background */}
+      <div className="min-h-screen bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-zinc-100 transition-colors duration-500 flex flex-col">
         
-        {/* Navbar now receives the toggle logic */}
         <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
 
         <Routes>
           <Route path="/login" element={<LogIn />} />
           <Route path="/signup" element={<SignUp />} />
+          
+          {/* 1. NEW WELCOME ROUTE */}
+          <Route path="/welcome" element={
+            <div className="flex-grow flex items-center justify-center">
+              <h1 className="text-4xl md:text-6xl font-black text-blue-600 dark:text-blue-400 animate-bounce">
+                Welcome to Poker Play.
+              </h1>
+            </div>
+          } />
 
           <Route path="/" element={
             <>
-              {/* Search Bar Row */}
-              <div className="bg-white dark:bg-zinc-900 border-b dark:border-zinc-800 py-4 px-4 sm:px-6 lg:px-8">
+              <div className="bg-white dark:bg-zinc-900 border-b dark:border-zinc-800 py-4 px-4">
                 <div className="max-w-7xl mx-auto flex justify-center">
                   <div className="w-full max-w-2xl">
                     <SearchBar onSearch={handleSearch} />
@@ -63,7 +72,6 @@ function App() {
               <main className="flex-grow">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                   
-                  {/* Search Results */}
                   {searchTerm !== '' && (
                     <div className="mb-10 p-6 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
                       <h2 className="text-xl font-semibold mb-4 text-blue-800 dark:text-blue-300">Search Results:</h2>
@@ -77,7 +85,6 @@ function App() {
                     </div>
                   )}
 
-                  {/* Features Section */}
                   <div className="mb-16">
                     <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white mb-8 text-center">
                       Explore Our Features
@@ -85,7 +92,6 @@ function App() {
                     <InfoCard />
                   </div>
 
-                  {/* Main Content Sections */}
                   <div className="space-y-20">
                     <ContentOne />
                     <ContentTwo />
